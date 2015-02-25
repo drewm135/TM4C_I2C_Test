@@ -9,12 +9,16 @@
  */
 
 /*
+ * Pin Connections
+ *
+ * Todo
+ */
+
+/*
  * Todo
  * Convert master transmitter method to slave receiver method
  * Convert main to match arduino sketch
  * Recomment main and receive methods
- *
- * Re-Add data from lost verion 0.3
  */
 
 #include <stdint.h>
@@ -65,7 +69,9 @@ __error__(char *pcFilename, uint32_t ui32Line)
 
 //*****************************************************************************
 //
-// Configure the I2C0 and its pins.  This must be called before I2C0MasterTX().
+// Configure the I2C0 and its pins.  This must be called before I2C0SlaveRX()
+// and I2C0SlaveTX().
+// Note: Changed function calls to ROM calls by adding MAP_ to statements.
 //
 //*****************************************************************************
 void
@@ -74,38 +80,49 @@ ConfigureI2C0(void)
 	//
 	//enable I2C module 0
 	//
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0);
+	MAP_SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0);
 	//
 	//enable GPIO peripheral that contains I2C 0
 	//
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
+	MAP_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
 	//
 	// Configure the pin muxing for I2C0 functions on port B2 and B3.
 	//
-	GPIOPinConfigure(GPIO_PB2_I2C0SCL);
-	GPIOPinConfigure(GPIO_PB3_I2C0SDA);
+	MAP_GPIOPinConfigure(GPIO_PB2_I2C0SCL);
+	MAP_GPIOPinConfigure(GPIO_PB3_I2C0SDA);
 	//
 	// Select the I2C function for these pins.
 	//
-	GPIOPinTypeI2CSCL(GPIO_PORTB_BASE, GPIO_PIN_2);
-	GPIOPinTypeI2C(GPIO_PORTB_BASE, GPIO_PIN_3);
+	MAP_GPIOPinTypeI2CSCL(GPIO_PORTB_BASE, GPIO_PIN_2);
+	MAP_GPIOPinTypeI2C(GPIO_PORTB_BASE, GPIO_PIN_3);
 	//
 	// Enable the I2C0 slave module.
 	//
-	I2CSlaveEnable(I2C0_BASE);
+	MAP_I2CSlaveEnable(I2C0_BASE);
 	//
 	// Set the slave address to SLAVE_ADDRESS.
 	//
-	I2CSlaveInit(I2C0_BASE, SLAVE_ADDRESS);
+	MAP_I2CSlaveInit(I2C0_BASE, SLAVE_ADDRESS);
 }
 
 //*****************************************************************************
 //
-// This must be called before I2C0MasterTX().
+// Used to receive data through I2C from the master.
+// Todo : Implement Arduino Sketch and change to a ISR
 //
-//*****************************************************************************4
-//Todo Convert master transmitter to slave receiver method
-/*void I2C0MasterTX(unsigned int address, unsigned char data)
+//*****************************************************************************
+void I2C0SlaveRX(unsigned int address, unsigned char data)
+{
+
+}
+
+//*****************************************************************************
+//
+// Used to send data through I2C to the master.
+// Todo : Change into a ISR.
+//
+//*****************************************************************************
+/*void I2C0SlaveTX(unsigned int address, unsigned char data)
 {
 
 	//
@@ -167,6 +184,10 @@ main(void)
     //
     while(1)
     {
+    	/*
+    	 * Check for received data
+    	 * Send back data
+    	 */
         //
         // Turn on D1.
         //
@@ -187,6 +208,6 @@ main(void)
         //
         // Delay for a bit.
         //
-        SysCtlDelay(g_ui32SysClock / 10 / 3);
+        MAP_SysCtlDelay(g_ui32SysClock / 10 / 3);
     }
 }
