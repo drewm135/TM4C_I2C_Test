@@ -13,19 +13,22 @@
  * Convert master transmitter method to slave receiver method
  * Convert main to match arduino sketch
  * Recomment main and receive methods
+ *
+ * Re-Add data from lost verion 0.3
  */
 
 #include <stdint.h>
 #include <stdbool.h>
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
+#include "inc/tm4c1294ncpdt.h"
 #include "driverlib/gpio.h"
-#include "drivers/pinout.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/rom.h"
 #include "driverlib/rom_map.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/i2c.h"
+//#include "drivers/pinout.h"
 
 
 //*****************************************************************************
@@ -102,7 +105,7 @@ ConfigureI2C0(void)
 //
 //*****************************************************************************4
 //Todo Convert master transmitter to slave receiver method
-void I2C0MasterTX(unsigned int address, unsigned char data)
+/*void I2C0MasterTX(unsigned int address, unsigned char data)
 {
 
 	//
@@ -126,7 +129,7 @@ void I2C0MasterTX(unsigned int address, unsigned char data)
 	//
 	while(I2CMasterBusy(I2C0_BASE));
 
-}
+}*/
 
 //*****************************************************************************
 //
@@ -147,12 +150,12 @@ main(void)
     //
     // Configure the device pins.
     //
-    PinoutSet(false, false);
+    //PinoutSet(false, false);
 
     //
     // Enable the GPIO pins for the LED D1 (PN1).
     //
-    ROM_GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
+    //ROM_GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
 
     //
     // Initialize Master and Slave
@@ -167,19 +170,19 @@ main(void)
         //
         // Turn on D1.
         //
-        LEDWrite(CLP_D1, 1);
-        I2C0MasterTX(4, 72);
+        //LEDWrite(CLP_D1, 1);
+        //I2C0MasterTX(4, 72);
 
         //
         // Delay for a bit.
         //
-        SysCtlDelay(g_ui32SysClock / 10 / 3);
+        //SysCtlDelay(g_ui32SysClock / 10 / 3);
 
         //
         // Turn off D1.
         //
-        LEDWrite(CLP_D1, 0);
-        I2C0MasterTX(4, 76);
+        //LEDWrite(CLP_D1, 0);
+        //I2C0MasterTX(4, 76);
 
         //
         // Delay for a bit.
