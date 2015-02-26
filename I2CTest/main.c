@@ -18,7 +18,6 @@
  * Todo
  * Convert master transmitter method to slave receiver method
  * Convert main to match arduino sketch
- * Recomment main and receive methods
  */
 
 #include <stdint.h>
@@ -166,6 +165,7 @@ main(void)
 
     //
     // Configure the device pins.
+    // Disables Ethernet and USB
     //
     //PinoutSet(false, false);
 
@@ -197,7 +197,7 @@ main(void)
         //
         // Delay for a bit.
         //
-        //SysCtlDelay(g_ui32SysClock / 10 / 3);
+        MAP_SysCtlDelay(g_ui32SysClock / 10 / 3);
 
         //
         // Turn off D1.
