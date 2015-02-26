@@ -32,7 +32,7 @@
 #include "driverlib/rom_map.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/i2c.h"
-//#include "drivers/pinout.h"
+#include "drivers/pinout.h"
 
 
 //*****************************************************************************
