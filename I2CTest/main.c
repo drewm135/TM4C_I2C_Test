@@ -167,12 +167,12 @@ main(void)
     // Configure the device pins.
     // Disables Ethernet and USB
     //
-    PinoutSet(false, false);
+    //PinoutSet(false, false);
 
     //
     // Enable the GPIO pins for the LED D1 (PN1).
     //
-    ROM_GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
+    //ROM_GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
 
     //
     // Initialize Master and Slave
@@ -191,7 +191,7 @@ main(void)
         //
         // Turn on D1.
         //
-        LEDWrite(CLP_D1, 1);
+        //LEDWrite(CLP_D1, 1);
         //I2C0MasterTX(4, 72);
 
         //
@@ -202,7 +202,7 @@ main(void)
         //
         // Turn off D1.
         //
-        LEDWrite(CLP_D1, 0);
+        //LEDWrite(CLP_D1, 0);
         //I2C0MasterTX(4, 76);
 
         //
