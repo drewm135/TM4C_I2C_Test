@@ -14,3 +14,6 @@ Contact me with any questions!!!
 
 Examples influenced by:
   http://blog.oscarliang.net/raspberry-pi-arduino-connected-i2c/
+  
+#Note
+There is a lot of junk here that I'm not going to take the time to ignore after its already been commited. Realistically nothing but .ccsproject, .cproject, .project, .settings folder and the source code are needed.
