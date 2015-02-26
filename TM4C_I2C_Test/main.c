@@ -33,7 +33,6 @@
 #include "driverlib/i2c.h"
 #include "drivers/pinout.h"
 
-
 //*****************************************************************************
 //
 // Set the address for slave module. This is a 7-bit address sent in the
@@ -167,7 +166,7 @@ main(void)
     // Configure the device pins.
     // Disables Ethernet and USB
     //
-    //PinoutSet(false, false);
+    PinoutSet(false, false);
 
     //
     // Enable the GPIO pins for the LED D1 (PN1).

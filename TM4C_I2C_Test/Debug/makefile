@@ -10,6 +10,7 @@ ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
 "./main.obj" \
 "./tm4c1294ncpdt_startup_ccs.obj" \
+"./drivers/pinout.obj" \
 "../tm4c1294ncpdt.cmd" \
 -l"libc.a" \
 -l"C:\ti\TivaWare_C_Series-2.1.0.12573\driverlib\ccs\Debug\driverlib.lib" \
@@ -22,7 +23,9 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include drivers/subdir_vars.mk
 -include subdir_rules.mk
+-include drivers/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -129,7 +132,7 @@ all: TM4C_I2C_Test.out
 TM4C_I2C_Test.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"c:/ti/ccsv6/tools/compiler/arm_5.1.10/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=ccs="ccs" --define=PART_TM4C1294NCPDT --display_error_number --diag_warning=225 --diag_wrap=off -z -m"TM4C_I2C_Test.map" --heap_size=0 --stack_size=512 -i"c:/ti/ccsv6/tools/compiler/arm_5.1.10/lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.10/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="TM4C_I2C_Test_linkInfo.xml" --rom_model -o "TM4C_I2C_Test.out" $(ORDERED_OBJS)
+	"c:/ti/ccsv6/tools/compiler/arm_5.1.10/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=ccs="ccs" --define=TARGET_IS_TM4C129_RA0 --define=PART_TM4C1294NCPDT --display_error_number --diag_warning=225 --diag_wrap=off -z -m"TM4C_I2C_Test.map" --heap_size=0 --stack_size=512 -i"c:/ti/ccsv6/tools/compiler/arm_5.1.10/lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.10/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="TM4C_I2C_Test_linkInfo.xml" --rom_model -o "TM4C_I2C_Test.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -142,8 +145,8 @@ TM4C_I2C_Test.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "main.pp" "tm4c1294ncpdt_startup_ccs.pp" 
-	-$(RM) "main.obj" "tm4c1294ncpdt_startup_ccs.obj" 
+	-$(RM) "main.pp" "tm4c1294ncpdt_startup_ccs.pp" "drivers\pinout.pp" 
+	-$(RM) "main.obj" "tm4c1294ncpdt_startup_ccs.obj" "drivers\pinout.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

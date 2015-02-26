@@ -24,6 +24,13 @@
 		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>drivers/pinout.c</name>
+			<type>1</type>
+			<locationURI>PARENT-5-PROJECT_LOC/ti/TivaWare_C_Series-2.1.0.12573/examples/boards/ek-tm4c1294xl/drivers/pinout.c</locationURI>
+		</link>
+	</linkedResources>
 	<variableList>
 		<variable>
 			<name>ORIGINAL_PROJECT_ROOT</name>
