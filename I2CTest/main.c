@@ -18,7 +18,6 @@
  * Todo
  * Convert master transmitter method to slave receiver method
  * Convert main to match arduino sketch
- * Recomment main and receive methods
  */
 
 #include <stdint.h>
