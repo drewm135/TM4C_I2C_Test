@@ -1,23 +1,29 @@
 /*
  * Author : Drew May
- * Data   : 2/25/2015
- * Version: 0.1
+ * Date   : March 1st 2015
+ * Version: 1.0
  * Summary: Tiva TM4C receives digit (1-9) from Raspberry Pi
  * 			connected through I2C and immediately transmits
  * 			digit back to Raspberry Pi. If '1' is received
  * 			then toggle a onboard LED.
+ *
+ * Pi Code: http://blog.oscarliang.net/raspberry-pi-arduino-connected-i2c/
+ *
+ * Note   : I have created corresponding C++ code if anyone would prefer.
+ *          It is on the GitHub. Also the code used to toggle the LEDs on
+ *          the Tiva are taken from the TivaWare drivers library and must
+ *          be linked in to the project folder in a folder called drivers.
  */
 
 /*
  * Pin Connections
  *
- * Todo
- */
-
-/*
- * Todo
- * Convert master transmitter method to slave receiver method
- * Convert main to match arduino sketch
+ * Ground is connected between both devices
+ * PB2 on Tiva is connected to SCL (Pin 2) on the Raspberry Pi
+ * PB3 on Tiva is connected to SDA (Pin 5) on the Raspberry Pi
+ *
+ * See http://pi.gadgetoid.com/pinout for a detailed
+ * pinout of the Raspberry Pi. We are using Pins 2 and 5.
  */
 
 #include <stdint.h>
@@ -105,53 +111,9 @@ ConfigureI2C0(void)
 
 //*****************************************************************************
 //
-// Used to receive data through I2C from the master.
-// Todo : Implement Arduino Sketch and change to a ISR
-//
-//*****************************************************************************
-void I2C0SlaveRX(unsigned int address, unsigned char data)
-{
-
-}
-
-//*****************************************************************************
-//
-// Used to send data through I2C to the master.
-// Todo : Change into a ISR.
-//
-//*****************************************************************************
-/*void I2C0SlaveTX(unsigned int address, unsigned char data)
-{
-
-	//
-	// Specify slave address
-	//
-	I2CMasterSlaveAddrSet(I2C0_BASE, address, false);
-	//
-	// Place the character to be sent in the data register
-	//
-	I2CMasterDataPut(I2C0_BASE, data);
-	//
-	// Initiate send of character from Master to Slave
-	//
-	I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_SINGLE_SEND);
-	//
-	// Wait for transmission to begin
-	//
-	while(!I2CMasterBusy(I2C0_BASE));
-	//
-	// Delay until transmission completes
-	//
-	while(I2CMasterBusy(I2C0_BASE));
-
-}*/
-
-//*****************************************************************************
-//
 // Transmit received data back to I2C master. Toggle LED when 1 is received.
 //
 //*****************************************************************************
-//Todo Adjust method to match Arduino Sketch
 int
 main(void)
 {
@@ -162,6 +124,10 @@ main(void)
                 SYSCTL_OSC_MAIN | SYSCTL_USE_PLL |
                 SYSCTL_CFG_VCO_480), 120000000);
 
+    uint32_t char_received = 0;
+
+    uint8_t  led_on = 0;
+
     //
     // Configure the device pins.
     // Disables Ethernet and USB
@@ -171,42 +137,41 @@ main(void)
     //
     // Enable the GPIO pins for the LED D1 (PN1).
     //
-    //ROM_GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
+    ROM_GPIOPinTypeGPIOOutput(GPIO_PORTN_BASE, GPIO_PIN_1);
 
     //
     // Initialize Master and Slave
     //
     ConfigureI2C0();
 
-    //
-    // We are finished.  Hang around flashing D1.
-    //
     while(1)
     {
-    	/*
-    	 * Check for received data
-    	 * Send back data
-    	 */
-        //
-        // Turn on D1.
-        //
-        //LEDWrite(CLP_D1, 1);
-        //I2C0MasterTX(4, 72);
 
         //
-        // Delay for a bit.
+        // Wait until the slave has received and acknowledged the data.
         //
-        MAP_SysCtlDelay(g_ui32SysClock / 10 / 3);
+        while(!(MAP_I2CSlaveStatus(I2C0_BASE) & I2C_SLAVE_ACT_RREQ));
 
         //
-        // Turn off D1.
+        // Read the data from the slave.
         //
-        //LEDWrite(CLP_D1, 0);
-        //I2C0MasterTX(4, 76);
+        char_received = MAP_I2CSlaveDataGet(I2C0_BASE);
+
+        if (char_received == 1) { //If a 1 is received we toggle the LED
+        	if (led_on == 0) {
+        		LEDWrite(CLP_D1, 1);
+        		led_on = 1;
+        	} else {
+        		LEDWrite(CLP_D1, 0);
+        		led_on = 0;
+        	}
+        }
 
         //
-        // Delay for a bit.
+        // Wait until slave data is requested
         //
-        MAP_SysCtlDelay(g_ui32SysClock / 10 / 3);
+        while(!(MAP_I2CSlaveStatus(I2C0_BASE) & I2C_SLAVE_ACT_TREQ));
+
+        MAP_I2CSlaveDataPut(I2C0_BASE, char_received); //Send back the data receieved earlier
     }
 }
