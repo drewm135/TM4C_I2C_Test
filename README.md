@@ -9,6 +9,14 @@ In CCS: Project->Build Options->ARM Compiler->Include Options.  Add your TivaWar
         Project->Build Options->ARM Linker  ->File Search Path. Add library file from TivaWare.
                 Library File is in TivaWare\driverlib\ccs\debug\driverlib.lib
                 
+Also needed is pinout.c from the TivaWare TM4C1294XL drivers folder(In the examples section). Copy or link this file into a folder in your project called drivers.
+
+Compile Instructions for C++ Program (If not using Python script mentioned below)
+-----------------------------------
+In order to run the C++ program the WiringPi library is needed. Instructions for installation are on the Wiring Pi website listed here: http://wiringpi.com/
+
+For g++: I2cTest.cpp -o I2cTest -I/usr/local/include -L/usr/local/lib -lwiringPi
+                
 Contact me with any questions!!!
   drewm135@gmail.com
 
