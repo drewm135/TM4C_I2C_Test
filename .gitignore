@@ -1,5 +1,5 @@
-/Debug
-/Release
-/.config
-/.launches
-.xdchelp
+TM4C_I2C_Test/Debug
+TM4C_I2C_Test/Release
+TM4C_I2C_Test/.config
+TM4C_I2C_Test/.launches
+TM4C_I2C_Test/.xdchelps
