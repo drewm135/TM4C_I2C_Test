@@ -11,6 +11,8 @@ In CCS: Project->Build Options->ARM Compiler->Include Options.  Add your TivaWar
                 
 Also needed is pinout.c from the TivaWare TM4C1294XL drivers folder(In the examples section). Copy or link this file into a folder in your project called drivers.
 
+For more information about setting up CCS projects visit http://www.instructables.com/id/Creating-a-new-Tiva-Project-in-Code-Composer-Studi/
+
 Compile Instructions for C++ Program (If not using Python script mentioned below)
 -----------------------------------
 In order to run the C++ program the WiringPi library is needed. Instructions for installation are on the Wiring Pi website listed here: http://wiringpi.com/
@@ -22,6 +24,3 @@ Contact me with any questions!!!
 
 Examples influenced by:
   http://blog.oscarliang.net/raspberry-pi-arduino-connected-i2c/
-  
-#Note
-There is a lot of junk here that I'm not going to take the time to ignore after its already been commited. Realistically nothing but .ccsproject, .cproject, .project, .settings folder and the source code are needed.
