@@ -34,7 +34,7 @@
 	<variableList>
 		<variable>
 			<name>ORIGINAL_PROJECT_ROOT</name>
-			<value>file:/C:/Users/Drew/git/TM4C_I2C_Test/I2CTest</value>
+			<value>file:/C:/Users/Drew/git/TM4C_I2C_Test/TM4C_I2C_Test</value>
 		</variable>
 		<variable>
 			<name>SW_ROOT</name>

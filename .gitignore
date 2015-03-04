@@ -1,1 +1,5 @@
-/I2CTest
+/Debug
+/Release
+/.config
+/.launches
+.xdchelp
